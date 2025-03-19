@@ -1,0 +1,8 @@
+# @package _global_
+
+exp_name: retrieval_daug
+
+model:
+  heatmap: channel
+  w_con_loss: 1.0
+  label_bce: true

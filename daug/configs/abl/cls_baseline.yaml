@@ -1,0 +1,8 @@
+# @package _global_
+
+exp_name: cls_baseline
+
+model:
+  heatmap: null
+  w_con_loss: 0.0
+  label_bce: true

@@ -1,0 +1,62 @@
+blob_root: /yjblob
+
+model:
+  backbone: 
+    name: MAEViT
+    img_size: 512
+  prompter:
+    name: LatentPromptGenerator
+    grounding: True
+    beam_size: 2
+    num_prompt_classes: 64
+    max_seq_len: 16
+    decoder:
+      type: 'bert_en'
+      fea_dim: 768
+      vocab_size: 30522
+      hidden_size: 768
+      num_layers: 6
+      attn_heads: 12
+      ffd_size: 3072 #768*4    
+      mask_future: True
+      padding_idx: 0
+      visual_proj: 'linearLn'
+  captioner:
+    max_seq_len: 64
+    beam_size: 2
+    decoder:
+      type: 'bert_en'
+      fea_dim: 768
+      vocab_size: 30522
+      hidden_size: 768
+      num_layers: 6
+      attn_heads: 12
+      ffd_size: 3072 #768*4    
+      mask_future: True
+      padding_idx: 0
+      visual_proj: 'linearLn'
+
+data:
+  data_root: ${..blob_root}/medical
+  output_dir: mimic-cxr-diff
+
+  img_dir: mimic-cxr-jpg-2.0.0
+  anno_path: mimic_cxr.anno.pt
+  mode: by_view
+  img_size: 512
+  class_provider: visual_chexbert # chexpert
+  neg_classes: ['No Finding']
+  pos_classes: [
+    ['Enlarged Cardiomediastinum', 'Cardiomegaly'],
+    ['Lung Lesion'],
+    ['Consolidation', 'Edema', 'Pneumonia'],
+    ['Atelectasis', 'Pneumothorax'],
+    ['Pleural Effusion', 'Pleural Other'],
+    ['Support Devices'],
+  ]
+
+  batch_size: 1
+  num_workers: 8
+
+diff_model_path: ${.blob_root}/medical/ckpt/diff/mimic2update000011.pt
+classifier_path: ${.blob_root}/medical/ckpt/diff_classifier_multi/ep_014.pt

@@ -1,0 +1,14 @@
+python scripts/classifier_train2.py \
+    --data_dir /yjblob/medical \
+    --iterations 15 \
+    --anneal_lr True \
+    --dataset mimic-cxr \
+    --lr 1e-4 \
+    --batch_size 48 \
+    --image_size 512 \
+    --classifier_attention_resolutions 32,16,8 \
+    --classifier_depth 4 \
+    --classifier_width 32 \
+    --classifier_pool attention \
+    --classifier_resblock_updown True \
+    --classifier_use_scale_shift_norm True

@@ -1,0 +1,8 @@
+# @package _global_
+
+exp_name: cls_hcontra
+
+model:
+  heatmap: null  
+  w_con_loss: 0.7
+  label_bce: true

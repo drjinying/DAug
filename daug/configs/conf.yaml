@@ -1,0 +1,65 @@
+exp_group: ${.task}
+exp_name: clip-cls-baseline
+exp_desc: ''
+
+#task: classification
+task: ablation
+epochs: 10
+print_freq: 10
+save_freq: 10
+test_freq: 5
+wandb: true
+debug: false
+random_seed: 5114
+ckpt_dir: ${.blob_root}/medical/ckpt/daug/${.exp_group}/${.exp_name}
+blob_root: /b
+log_retrieval_k: 1
+
+model:
+  pretrain: openai/clip-vit-base-patch32
+  heatmap: null
+  w_con_loss: 0.7
+  label_bce: true
+  logit_scale: 4.602
+
+solver:
+  base_lr: 2e-5
+  decay: 0.01
+scheduler:
+  name: cosine
+  warmup: 10
+
+data:
+  img_size: 256
+  max_text_len: 154
+
+  data_root: ${..blob_root}/medical
+  #img_dir: mimic-cxr-jpg-2.0.0
+  img_dir: mimic-cxr-resized/2.0.0
+
+  heatmap_dir: mimic-cxr-diff
+  heatmap_name: _+nof.npy
+  anno_path: mimic_cxr.anno.pt
+  
+  mode: by_view
+  class_provider: visual_chexbert
+  chexpert_uncertain: negative
+  class_labels: [
+    'Enlarged Cardiomediastinum',
+    'Cardiomegaly',
+    'Lung Opacity',
+    'Lung Lesion',
+    'Edema',
+    'Consolidation',
+    'Pneumonia',
+    'Atelectasis',
+    'Pneumothorax',
+    'Pleural Effusion',
+    'Pleural Other',
+    'Fracture',
+    'Support Devices',
+    'No Finding'
+  ]
+
+  batch_size: 32
+  num_workers: 5

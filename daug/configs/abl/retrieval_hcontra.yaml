@@ -1,0 +1,8 @@
+# @package _global_
+
+exp_name: retrieval_hcontra
+
+model:
+  heatmap: null
+  w_con_loss: 0.8
+  label_bce: true
